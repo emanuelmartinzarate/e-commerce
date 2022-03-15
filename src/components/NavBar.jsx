@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
+import CartWiget from './CartWiget'
 
 function NavBar() {
     return (
@@ -25,7 +26,7 @@ function NavBar() {
                         </NavDropdown>
                     </Nav>
                     <Form className="d-flex">
-                        <Button variant="outline-success">Cart</Button>
+                        <Button variant="outline-success"><CartWiget/></Button>
                     </Form>
                 </Navbar.Collapse>
             </Container>
