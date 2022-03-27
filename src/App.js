@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import NavBar from './components/NavBar';
-import ItemListContainer from './components/ItemListContainer';
+import RoutesApp from './components/RoutesApp';
 
 function App() {
   return (
     <div className="App">
-      <NavBar/>
-      <ItemListContainer saludo='Contador'/>
+      <RoutesApp/>
+      
     </div>
   );
 }

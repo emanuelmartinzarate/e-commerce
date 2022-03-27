@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ItemCount from './ItemCount'
 import ItemList from './ItemList'
 
 function ItemListContainer(props) {
-    console.log(props)
-    return (
+
+  const initial=1;
+  const [stock,setStock] = useState(20)
+
+  function addToCart(quantity){
+    if(quantity > stock){
+      alert(`La cantidad ingresa supera el stock`);
+    }else{
+      setStock(stock - quantity);
+      alert(`Se agregaron ${quantity} al carrito`);
+    }
+  }
+  
+  return (
     <>
-      <ItemCount initial={1} stock={20}/>
+      <ItemCount initial={initial} stock={stock} addToCart={addToCart}/>
+      <div>
+            <span>Stock: {stock}</span>
+        </div>
       <ItemList></ItemList>
     </>
     

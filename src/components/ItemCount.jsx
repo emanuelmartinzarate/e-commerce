@@ -5,36 +5,26 @@ import './ItemCount.css'
 function ItemCount(props) {
     
     const [quantity,setQuantity] =useState(props.initial);
-    const [stock,setStock] = useState(props.stock-1)
-
+    
+    const stock = props.stock;
+    
     function addItem(){
-        if(props.stock > quantity){
-            setQuantity(quantity+1)
-            setStock(stock-1)
-        }
-            
-    }
+        setQuantity(quantity+1)
+     }
 
     function putOffItem(){
-        if(quantity > props.initial){
-            setQuantity(quantity-1)
-            setStock(stock+1)
-        }
-            
-    }
+        setQuantity(quantity-1)
+     }
 
-  return (
+     return (
     <>
         <div>
-            <Button variant="light" onClick={putOffItem}> - </Button>
+            <Button variant="light" onClick={()=>putOffItem()} disabled={quantity===props.initial}> - </Button>
             <span className="quantity">{ quantity }</span>
-            <Button variant="light" onClick={addItem}> + </Button>
+            <Button variant="light" onClick={()=>addItem()} disabled={stock===quantity || stock === 0   }> + </Button>
         </div>
         <div>
-            <span>Cantidad disponible: {stock}</span>
-        </div>
-        <div>
-            <Button variant="light">Agregar al carrito</Button>
+            <Button variant="light" onClick={()=>props.addToCart(quantity)} disabled={stock === 0}>Agregar al carrito</Button>
         </div>
     </>     
   )
