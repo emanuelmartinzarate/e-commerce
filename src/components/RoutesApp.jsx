@@ -1,3 +1,4 @@
+import ItemDetailContainer from "./ItemDetailContainer"
 import ItemListContainer from "./ItemListContainer"
 import NavBar from "./NavBar"
 
@@ -7,6 +8,7 @@ function RoutesApp() {
         
         <NavBar/>
         <ItemListContainer saludo='Contador'/>
+        <ItemDetailContainer />
     </div>
   )
 }
