@@ -16,9 +16,8 @@ function ItemList(props) {
                                 pictureUrl={product.pictureUrl} 
                                 price={product.price} 
                                 description={product.description}
-                                initial={props.initial} 
-                                stock={props.stock} 
-                                addToCart={props.addToCart}/>
+                                id={product.id}
+                                category={product.category}/>
                         </div>
         )}
     </div>

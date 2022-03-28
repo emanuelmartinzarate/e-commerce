@@ -1,15 +1,23 @@
 import ItemDetailContainer from "./ItemDetailContainer"
 import ItemListContainer from "./ItemListContainer"
 import NavBar from "./NavBar"
+import { BrowserRouter,Routes,Route } from "react-router-dom"
+import Cart from "./Cart"
 
 function RoutesApp() {
   return (
-    <div className="App">
-        
+    // Nos da el ambito donde podemos aplicar cualquier funcion de routeo en los componentes hijos
+    <BrowserRouter>
         <NavBar/>
-        <ItemListContainer saludo='Contador'/>
-        <ItemDetailContainer />
-    </div>
+        {/*Me permite agregar una ruta a los componentes que necesito  */}
+        <Routes>
+          {/* Asocia una ruta a mi componente */}
+          <Route path="/" element={<ItemListContainer />}></Route>
+          <Route path="/detalle/:detalleId" element={<ItemDetailContainer />}></Route>
+          <Route path="/category/:categoryId" element={<ItemListContainer />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
+        </Routes>
+    </BrowserRouter>
   )
 }
 
