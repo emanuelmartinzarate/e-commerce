@@ -1,4 +1,5 @@
 import React from 'react'
+import InputCount from './InputCount'
 import ItemCount from './ItemCount'
 
 
@@ -14,11 +15,13 @@ function ItemDetail(props) {
     </div>
     <div className='card-footer'>
       <>
-        <ItemCount initial={props.initial} stock={props.stock} addToCart={props.addToCart}/>      
+        {
+           props.inputType === 'itemCount' ?
+              <ItemCount initial={props.initial} stock={props.stock} addToCart={props.addToCart}/>
+            :
+              <InputCount />
+        }
       </>
-    </div>
-    <div>
-        <span>Stock: {props.stock}</span>
     </div>
 </div>
   )

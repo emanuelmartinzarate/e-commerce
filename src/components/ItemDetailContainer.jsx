@@ -7,6 +7,7 @@ function ItemDetailContainer() {
 
   const initial=1;
   const [stock,setStock] = useState(20)
+  const [inputType, setInputType] = useState('itemCount')
 
   function addToCart(quantity){
     if(quantity > stock){
@@ -14,6 +15,7 @@ function ItemDetailContainer() {
     }else{
       setStock(stock - quantity);
       alert(`Se agregaron ${quantity} al carrito`);
+      setInputType('inputCount')
     }
   }
 
@@ -32,7 +34,7 @@ function ItemDetailContainer() {
 
   return (
     <>
-        <ItemDetail product={product} initial={initial} stock={stock} addToCart={addToCart}/>
+        <ItemDetail product={product} initial={initial} stock={stock} addToCart={addToCart} inputType={inputType}/>
     </>
   )
 }
