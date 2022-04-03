@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getFetch } from '../data/productsMock'
+import { useCartContext } from './CartContext';
 import ItemDetail from './ItemDetail'
 
 function ItemDetailContainer() {
@@ -8,18 +9,19 @@ function ItemDetailContainer() {
   const initial=1;
   const [stock,setStock] = useState(20)
   const [inputType, setInputType] = useState('itemCount')
+  const {addToCart} = useCartContext()
 
-  function addToCart(quantity){
+  function onAdd(quantity){
     if(quantity > stock){
       alert(`La cantidad ingresa supera el stock`);
     }else{
       setStock(stock - quantity);
-      alert(`Se agregaron ${quantity} al carrito`);
+      addToCart({...product,quantity:quantity})
       setInputType('inputCount')
     }
   }
 
-    //persisto mis datos
+  //persisto mis datos
   const [product,setProduct] = useState({}) 
   //hook de react router dom 
   const{detalleId} = useParams()
@@ -34,7 +36,7 @@ function ItemDetailContainer() {
 
   return (
     <>
-        <ItemDetail product={product} initial={initial} stock={stock} addToCart={addToCart} inputType={inputType}/>
+        <ItemDetail product={product} initial={initial} stock={stock} onAdd={onAdd} inputType={inputType}/>
     </>
   )
 }

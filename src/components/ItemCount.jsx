@@ -24,7 +24,7 @@ function ItemCount(props) {
             <Button variant="light" onClick={()=>addItem()} disabled={stock===quantity || stock === 0   }> + </Button>
         </div>
         <div>
-            <Button variant="light" onClick={()=>props.addToCart(quantity)} disabled={stock === 0}>Agregar al carrito</Button>
+            <Button variant="light" onClick={()=>props.onAdd(quantity)} disabled={stock === 0}>Agregar al carrito</Button>
         </div>
         <div>
             <span>Stock: {props.stock}</span>

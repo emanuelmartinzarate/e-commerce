@@ -17,7 +17,7 @@ function ItemDetail(props) {
       <>
         {
            props.inputType === 'itemCount' ?
-              <ItemCount initial={props.initial} stock={props.stock} addToCart={props.addToCart}/>
+              <ItemCount initial={props.initial} stock={props.stock} onAdd={props.onAdd}/>
             :
               <InputCount />
         }
