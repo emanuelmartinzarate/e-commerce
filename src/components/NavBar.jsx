@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import { NavLink } from 'react-router-dom'
+import CartWiget from './CartWiget'
 
 
 function NavBar() {
@@ -21,7 +22,7 @@ function NavBar() {
                         <NavLink to="/category/B">Category B</NavLink>
                     </Nav>
                     <Form className="d-flex">
-                        <NavLink to='/cart'>Cart</NavLink>
+                        <NavLink to='/cart'><CartWiget/></NavLink>
                     </Form>
                 </Navbar.Collapse>
             </Container>

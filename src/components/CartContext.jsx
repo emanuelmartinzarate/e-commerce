@@ -26,8 +26,8 @@ function CartContextProvider({children}){
                 item
             ])
         }
-        
     }
+
     const clear= () => {
         setCartList([])
     }
