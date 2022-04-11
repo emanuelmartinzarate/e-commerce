@@ -10,6 +10,7 @@ function ItemDetailContainer() {
   const [stock,setStock] = useState(20)
   const [inputType, setInputType] = useState('itemCount')
   const {addToCart} = useCartContext()
+  const [loading,setLoading] = useState(true)
 
   function onAdd(quantity){
     if(quantity > stock){
@@ -31,12 +32,12 @@ function ItemDetailContainer() {
       getFetch //funcion que simula la api
       .then(resp => setProduct(resp.find(prod => prod.id === detalleId)))
       .catch(err => console.log(err))
-      .finally(()=> console.log(""))
+      .finally(()=> setLoading(false))
   },[detalleId])//le pongo [] para que se ejecute solo una vez despues del renderizado
 
   return (
     <>
-        <ItemDetail product={product} initial={initial} stock={stock} onAdd={onAdd} inputType={inputType}/>
+        <ItemDetail product={product} initial={initial} stock={stock} onAdd={onAdd} inputType={inputType} loading={loading}/>
     </>
   )
 }
