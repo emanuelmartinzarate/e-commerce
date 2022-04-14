@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 import ItemList from './ItemList'
 import { useEffect } from 'react'
-import { getFetch } from '../data/productsMock'
 import { useParams } from 'react-router-dom';
+import { collection, getDocs, getFirestore, orderBy, query, where } from 'firebase/firestore' 
 
 function ItemListContainer() {
 
@@ -14,22 +14,25 @@ function ItemListContainer() {
   
   //hook de react router dom 
   const{categoryId} = useParams()
-  
-  //creo un useEffect para llamar a la api simulada
-  useEffect(()=>{
-      if(categoryId){
-         getFetch //funcion que simula la api
-        .then(resp => setProducts(resp.filter(item => item.category === categoryId)))
-        .catch(err => console.log(err))
-        .finally(()=> setLoading(false))
-      }else{
-        getFetch //funcion que simula la api
-        .then(resp => setProducts(resp))
-        .catch(err => console.log(err))
-        .finally(()=> setLoading(false))
-      }
-  },[categoryId])//le pongo [] para que se ejecute solo una vez despues del renderizado
 
+  useEffect(()=>{
+    if(categoryId){
+      const querydb = getFirestore()
+      const queryCollection = collection(querydb,'products')
+      const queryFilter = query(queryCollection, where('category','==',categoryId),orderBy('title','asc'))
+      getDocs(queryFilter)
+        .then(resp => setProducts(resp.docs.map(item => ( {id:item.id, ...item.data()} ) ) ) )
+        .catch(err => console.log(err))
+        .finally(()=> setLoading(false))
+    }else{
+      const querydb = getFirestore()
+      const queryCollection = collection(querydb,'products')
+      getDocs(queryCollection)
+        .then(resp => setProducts(resp.docs.map(item => ( {id:item.id, ...item.data()} ) ) ) )
+        .catch(err => console.log(err))
+        .finally(()=> setLoading(false))
+    }
+  },[categoryId])
   
   return (
     <>

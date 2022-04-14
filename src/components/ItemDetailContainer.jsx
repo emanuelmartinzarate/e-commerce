@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getFetch } from '../data/productsMock'
 import { useCartContext } from './CartContext';
 import ItemDetail from './ItemDetail'
+import { doc, getDoc, getFirestore } from 'firebase/firestore'
 
 function ItemDetailContainer() {
 
@@ -27,13 +27,15 @@ function ItemDetailContainer() {
   //hook de react router dom 
   const{detalleId} = useParams()
 
-   //creo un useEffect para llamar a la api simulada
+
   useEffect(()=>{
-      getFetch //funcion que simula la api
-      .then(resp => setProduct(resp.find(prod => prod.id === detalleId)))
+    const querydb = getFirestore()
+    const queryProd = doc(querydb,'products',detalleId)
+    getDoc(queryProd)
+      .then(resp => setProduct( {id:resp.id, ...resp.data()} ))
       .catch(err => console.log(err))
       .finally(()=> setLoading(false))
-  },[detalleId])//le pongo [] para que se ejecute solo una vez despues del renderizado
+  },[detalleId])
 
   return (
     <>
