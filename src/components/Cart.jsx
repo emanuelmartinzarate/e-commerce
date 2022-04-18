@@ -1,10 +1,43 @@
-import React from 'react'
-import { Button } from 'react-bootstrap'
+import { addDoc, collection, getFirestore } from 'firebase/firestore'
+import React, { useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useCartContext } from './CartContext'
 
 function Cart() {
+  
   const {cartList,clear,deleteItem} = useCartContext()
+  const [orderNumber, setOrderNumber] = useState(0)
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+                              clear()
+                              setShow(false)
+                            };
+  const handleShow = () => setShow(true);
+  
+  const generarOrden = (e) =>{
+    e.preventDefault();
+    let orden = {}
+
+    orden.buyer = { name:'Emanuel Martin Zarate',email:'emanuelmartin@gmail.com',phone:'01010101920' }
+    orden.total = cartList.reduce((acc,cartItem)=> acc + cartItem.quantity * cartItem.price,0)
+    orden.items = cartList.map(cartItem => {
+      const id = cartItem.id
+      const title = cartItem.title
+      const price = cartItem.price * cartItem.quantity
+
+      return {id,title,price}
+    })
+    
+    //creacion de un documento
+    const db = getFirestore()
+    const queryCollection = collection(db,'orders')
+    addDoc(queryCollection,orden)
+    .then(({id}) => setOrderNumber(id))
+    .catch(err => console.log(err))
+    .finally(handleShow)
+  }
   return (
     <div>
       {
@@ -30,8 +63,26 @@ function Cart() {
               )}
               <span>Total a pagar: {cartList.reduce((acc,cartItem)=> acc + cartItem.quantity * cartItem.price,0)}</span><br></br>
             <Button variant="light" onClick={clear}>Vaciar Carrito</Button>
+            <Button variant="light" onClick={generarOrden}>Generar Orden</Button>
+            <Modal
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Numero de Orden</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Numero de orden : {orderNumber}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+              </Modal.Footer>
+          </Modal>
           </>
-          
     }
     </div>
   )
