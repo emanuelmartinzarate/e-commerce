@@ -8,9 +8,9 @@ import CartWiget from './CartWiget'
 
 function NavBar() {
     return (
-        <Navbar bg="ligth" expand="lg">
+        <Navbar className='navbar sticky-top navbar-expand-lg navbar-light'>
             <Container fluid>
-                <NavLink to="/">E-commerce</NavLink>
+                <NavLink className="nav-link" to="/">E-commerce</NavLink>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
@@ -18,11 +18,11 @@ function NavBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <NavLink to="/category/A">Category A</NavLink>
-                        <NavLink to="/category/B">Category B</NavLink>
+                        <NavLink className="nav-link" to="/category/A">Category A</NavLink>
+                        <NavLink className="nav-link" to="/category/B">Category B</NavLink>
                     </Nav>
                     <Form className="d-flex">
-                        <NavLink to='/cart'><CartWiget/></NavLink>
+                        <NavLink className="nav-link" to='/cart'><CartWiget/></NavLink>
                     </Form>
                 </Navbar.Collapse>
             </Container>

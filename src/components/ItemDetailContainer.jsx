@@ -38,9 +38,7 @@ function ItemDetailContainer() {
   },[detalleId])
 
   return (
-    <>
-        <ItemDetail product={product} initial={initial} stock={stock} onAdd={onAdd} inputType={inputType} loading={loading}/>
-    </>
+          <ItemDetail product={product} initial={initial} stock={stock} onAdd={onAdd} inputType={inputType} loading={loading}/>
   )
 }
 

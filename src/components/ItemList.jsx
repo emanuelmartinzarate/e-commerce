@@ -1,24 +1,26 @@
 
+import { Spinner } from 'react-bootstrap'
 import Item from './Item'
 
 function ItemList(props) {
     
   return (
-    <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap'}}>
+    <div className='container-cards'>
         {
         props.loading ? 
-            <h2>Loading...</h2>
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
         :   
             props.products.map((product)=>
-                        <div key={product.id} className='col-md-4'> 
-                            <Item  
+                            <Item
+                                key={product.id}  
                                 title={product.title} 
-                                pictureUrl={product.pictureUrl} 
+                                picture={product.picture} 
                                 price={product.price} 
                                 description={product.description}
                                 id={product.id}
                                 category={product.category}/>
-                        </div>
         )}
     </div>
   )
