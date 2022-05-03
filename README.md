@@ -1,3 +1,21 @@
+
+# Demo de la aplicacion
+https://heartfelt-queijadas-1ed80d.netlify.app/
+
+
+# Principales herramientas utilizadas en el proyecto
+| Herramienta | Version |
+| ------ | ------ |
+| bootstrap | 5.1.3 |
+| firebase | 9.6.10 |
+| react | 17.0.2 |
+| react-bootstrap | 2.2.0 |
+| react-dom | 17.0.2 |
+| react-router-dom | 6.2.2 |
+
+
+
+
 # Video de la primera entrega del proyecto final
 
 https://drive.google.com/file/d/1ny7elkJM8VDAJDnRSGVLD3Q0ZORidLMZ/view?usp=sharing
