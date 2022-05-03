@@ -6,10 +6,10 @@ function InputCount() {
   return (
         <>
             <Link to='/cart' >
-                <Button variant="light" onClick={()=>console.log('ir a cart') }>Ir al Cart o Terminar compra</Button>
+                <Button variant="light" >Ir al Cart o Terminar compra</Button>
             </Link>
             <Link to='/' >
-                <Button variant="light" onClick={()=>console.log('ir a cart') } >Seguir comprando</Button>
+                <Button variant="light" >Seguir comprando</Button>
             </Link>
         </>
   )

@@ -22,10 +22,8 @@ function ItemDetailContainer() {
     }
   }
 
-  //persisto mis datos
-  const [product,setProduct] = useState({}) 
-  //hook de react router dom 
-  const{detalleId} = useParams()
+   const [product,setProduct] = useState({}) 
+   const{detalleId} = useParams()
 
 
   useEffect(()=>{

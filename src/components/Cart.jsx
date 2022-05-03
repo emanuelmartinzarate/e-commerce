@@ -1,6 +1,6 @@
 import { addDoc, collection, getFirestore } from 'firebase/firestore'
 import React, { useState } from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Col, Form, FormControl, Modal, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useCartContext } from './CartContext'
 import Card from 'react-bootstrap/Card'
@@ -10,6 +10,12 @@ function Cart() {
   const {cartList,clear,deleteItem} = useCartContext()
   const [orderNumber, setOrderNumber] = useState(0)
   const [show, setShow] = useState(false);
+  const [formData, setFormData] = useState({
+    name:'',
+    emailOne:'',
+    emailTwo:'',
+    cellphone:''
+  })
 
   const handleClose = () => {
                               clear()
@@ -17,28 +23,45 @@ function Cart() {
                             };
   const handleShow = () => setShow(true);
   
-  const generarOrden = (e) =>{
-    e.preventDefault();
-    let orden = {}
-
-    orden.buyer = { name:'Emanuel Martin Zarate',email:'emanuelmartin@gmail.com',phone:'01010101920' }
-    orden.total = cartList.reduce((acc,cartItem)=> acc + cartItem.quantity * cartItem.price,0)
-    orden.items = cartList.map(cartItem => {
-      const id = cartItem.id
-      const title = cartItem.title
-      const price = cartItem.price * cartItem.quantity
-
-      return {id,title,price}
-    })
-    
-    //creacion de un documento
-    const db = getFirestore()
-    const queryCollection = collection(db,'orders')
-    addDoc(queryCollection,orden)
-    .then(({id}) => setOrderNumber(id))
-    .catch(err => console.log(err))
-    .finally(handleShow)
+  const generateOrder = (event) =>{
+    event.preventDefault();
+    if(validateEmail()){
+      
+      let order = {}
+  
+      order.buyer = formData
+      order.total = cartList.reduce((acc,cartItem)=> acc + cartItem.quantity * cartItem.price,0)
+      order.items = cartList.map(cartItem => {
+        const id = cartItem.id
+        const title = cartItem.title
+        const price = cartItem.price * cartItem.quantity
+  
+        return {id,title,price}
+      })
+      
+      //creacion de un documento
+      const db = getFirestore()
+      const queryCollection = collection(db,'orders')
+      addDoc(queryCollection,order)
+      .then(({id}) => setOrderNumber(id))
+      .catch(err => console.log(err))
+      .finally(handleShow)
+    }else{
+      alert("Los mails ingresados no coinciden")
+    }
   }
+
+  const handleChangeForm = (event) =>{
+    setFormData({
+      ...formData,
+      [event.target.name]:event.target.value
+    })
+  }
+
+  function validateEmail (){
+    return formData.emailOne === formData.emailTwo
+  }
+
   return (
     <div>
       {
@@ -46,16 +69,16 @@ function Cart() {
           <>
             <span>Tu carrito esta vacio</span><br></br>
             <Link to='/' >
-                <Button variant="light" onClick={()=>console.log('ir a cart') } >Seguir comprando</Button>
+                <Button variant="light">Seguir comprando</Button>
             </Link>
           </>
         :
           <>
             {cartList.map(prod => 
-              <li key={prod.id} style={{'list-style-type':'none'}}>
-                <Card style={{'flex-direction': 'row',width: '100%'}}>
+              <li key={prod.id} style={{'listStyleType':'none'}}>
+                <Card style={{'flexDirection': 'row',width: '100%'}}>
                   <Card.Img style={{width: '10%',heigth:'10%'}} src={prod.picture} />
-                  <Card.Body style={{display: 'inline', 'text-align': 'left'}}>
+                  <Card.Body style={{display: 'inline', 'textAlign': 'left'}}>
                     <Card.Title style={{display: 'inline'}}>{prod.title}</Card.Title>
                     <Card.Text  style={{display: 'inline'}}>
                       cantidad:{prod.quantity} - precio:{prod.price}
@@ -70,11 +93,28 @@ function Cart() {
                 </Card>
               </li>
               )}
-              <div style={{'text-align':'center'}}>
+              <div style={{'textAlign':'center'}}>
                 <span>Total a pagar: {cartList.reduce((acc,cartItem)=> acc + cartItem.quantity * cartItem.price,0)}</span><br></br>
                 <Button variant="light" onClick={clear}>Vaciar Carrito</Button>
-                <Button variant="light" onClick={generarOrden}>Generar Orden</Button>
               </div>
+                <Form
+                  onSubmit={generateOrder}
+                >   
+                  <Row className="mb-4" style={{'justifyContent': 'center'}} >
+                    <Form.Group as={Col} md="4" controlId="validationCustom01" style={{'textAlign': 'left'}}>
+                      <Form.Label >Nombre</Form.Label>
+                      <FormControl name="name" type="text" placeholder="Ingrese nombre" onChange={handleChangeForm} values={formData.name} required/>
+                      <Form.Label>Email</Form.Label>
+                      <FormControl name="emailOne" type="email" placeholder="Ingrese email" onChange={handleChangeForm} values={formData.emailOne} required/>
+                      <Form.Label>Reingrese Email</Form.Label>
+                      <FormControl name="emailTwo" type="email" placeholder='Reingrese email' onChange={handleChangeForm} values={formData.emailTwo} required/>
+                      <Form.Label>Celular</Form.Label>
+                      <FormControl name="cellphone" type="tel" placeholder='Ingrese celular' onChange={handleChangeForm} values={formData.cellphone} required/>
+                      <br></br>  
+                      <Button type="submit" variant="light">Generar Orden</Button>
+                    </Form.Group>
+                  </Row>
+                </Form>
             <Modal
               show={show}
               onHide={handleClose}

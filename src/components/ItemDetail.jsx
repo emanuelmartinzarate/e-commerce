@@ -16,7 +16,7 @@ function ItemDetail(props) {
       </Spinner>
       :
       <Container>
-        <Row className="container-details-card" style={{'justify-content':'center'}}>
+        <Row className="container-details-card" style={{'justifyContent':'center'}}>
           <Card className="text-center" style={{width: '40%',heigth:'40%'}}>
             <Card.Header>{props.product.title} - {props.product.category}</Card.Header>
             <Card.Img src={props.product.picture} />
